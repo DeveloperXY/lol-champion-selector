@@ -1,0 +1,3 @@
+C:/Users/muscl/projects/lol-champion-selector/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/muscl/projects/lol-champion-selector/cmake-build-debug/CMakeFiles/untitled.dir
+C:/Users/muscl/projects/lol-champion-selector/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -3,6 +3,8 @@
 
 CMakeFiles/untitled.dir/functions.c.obj: ../defs.h
 CMakeFiles/untitled.dir/functions.c.obj: ../functions.c
+CMakeFiles/untitled.dir/functions.c.obj: ../functions.h
+CMakeFiles/untitled.dir/functions.c.obj: ../structs.h
 CMakeFiles/untitled.dir/functions.c.obj: C:/libs/SDL/include/SDL2/SDL.h
 CMakeFiles/untitled.dir/functions.c.obj: C:/libs/SDL/include/SDL2/SDL_assert.h
 CMakeFiles/untitled.dir/functions.c.obj: C:/libs/SDL/include/SDL2/SDL_atomic.h
@@ -19,6 +21,7 @@ CMakeFiles/untitled.dir/functions.c.obj: C:/libs/SDL/include/SDL2/SDL_gamecontro
 CMakeFiles/untitled.dir/functions.c.obj: C:/libs/SDL/include/SDL2/SDL_gesture.h
 CMakeFiles/untitled.dir/functions.c.obj: C:/libs/SDL/include/SDL2/SDL_haptic.h
 CMakeFiles/untitled.dir/functions.c.obj: C:/libs/SDL/include/SDL2/SDL_hints.h
+CMakeFiles/untitled.dir/functions.c.obj: C:/libs/SDL/include/SDL2/SDL_image.h
 CMakeFiles/untitled.dir/functions.c.obj: C:/libs/SDL/include/SDL2/SDL_joystick.h
 CMakeFiles/untitled.dir/functions.c.obj: C:/libs/SDL/include/SDL2/SDL_keyboard.h
 CMakeFiles/untitled.dir/functions.c.obj: C:/libs/SDL/include/SDL2/SDL_keycode.h
@@ -53,7 +56,9 @@ CMakeFiles/untitled.dir/functions.c.obj: C:/libs/SDL/include/SDL2/begin_code.h
 CMakeFiles/untitled.dir/functions.c.obj: C:/libs/SDL/include/SDL2/close_code.h
 
 CMakeFiles/untitled.dir/main.c.obj: ../defs.h
+CMakeFiles/untitled.dir/main.c.obj: ../functions.h
 CMakeFiles/untitled.dir/main.c.obj: ../main.c
+CMakeFiles/untitled.dir/main.c.obj: ../structs.h
 CMakeFiles/untitled.dir/main.c.obj: C:/libs/SDL/include/SDL2/SDL.h
 CMakeFiles/untitled.dir/main.c.obj: C:/libs/SDL/include/SDL2/SDL_assert.h
 CMakeFiles/untitled.dir/main.c.obj: C:/libs/SDL/include/SDL2/SDL_atomic.h
@@ -70,6 +75,7 @@ CMakeFiles/untitled.dir/main.c.obj: C:/libs/SDL/include/SDL2/SDL_gamecontroller.
 CMakeFiles/untitled.dir/main.c.obj: C:/libs/SDL/include/SDL2/SDL_gesture.h
 CMakeFiles/untitled.dir/main.c.obj: C:/libs/SDL/include/SDL2/SDL_haptic.h
 CMakeFiles/untitled.dir/main.c.obj: C:/libs/SDL/include/SDL2/SDL_hints.h
+CMakeFiles/untitled.dir/main.c.obj: C:/libs/SDL/include/SDL2/SDL_image.h
 CMakeFiles/untitled.dir/main.c.obj: C:/libs/SDL/include/SDL2/SDL_joystick.h
 CMakeFiles/untitled.dir/main.c.obj: C:/libs/SDL/include/SDL2/SDL_keyboard.h
 CMakeFiles/untitled.dir/main.c.obj: C:/libs/SDL/include/SDL2/SDL_keycode.h

@@ -16,7 +16,7 @@ void blit(SDL_Texture *texture, int x, int y);
 
 int getUserChoice(int nbrOfChampions);
 
-Champion *loadChampionList();
+Champion *loadChampionList(int nbrOfChampions);
 
 int getFirstChampionHorizontalOffset();
 

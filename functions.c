@@ -1,44 +1,33 @@
 #include <SDL2/SDL.h>
 #include <stdio.h>
+#include <string.h>
 #include "defs.h"
 #include "functions.h"
 
 int getUserChoice(int nbrOfChampions) {
-    puts("how many champs to load?");
+    puts("how many champions to load?");
     scanf("%d", &nbrOfChampions);
     return nbrOfChampions;
 }
 
 
-Champion *loadChampionList() {
-    int nbrOfChamps = 10;
-    Champion *list;
-    list = malloc(sizeof(list) * nbrOfChamps);
-    for (int i = 0; i < 10; ++i) {
-        (list + i)->name = malloc(sizeof(char) * 15);
-        (list + i)->thumbnailImage = malloc(sizeof(char) * 30);
-    }
-    (list)->name = "aatrox";
-    (list + 1)->name = "darius";
-    (list + 2)->name = "diana";
-    (list + 3)->name = "gangplank";
-    (list + 4)->name = "katarina";
-    (list + 5)->name = "leblanc";
-    (list + 6)->name = "mordekaiser";
-    (list + 7)->name = "talon";
-    (list + 8)->name = "vladimir";
-    (list + 9)->name = "zed";
+Champion *loadChampionList(int nbrOfChampions) {
+    Champion *list = NULL;
+    FILE *file = fopen(CHAMPIONS_DATA_FILE_PATH, "r");
 
-    (list)->thumbnailImage = "champs/aatroxIcon.jpg";
-    (list + 1)->thumbnailImage = "champs/dariusIcon.jpg";
-    (list + 2)->thumbnailImage = "champs/dianaIcon.jpg";
-    (list + 3)->thumbnailImage = "champs/gangplankIcon.jpg";
-    (list + 4)->thumbnailImage = "champs/katarinaIcon.jpg";
-    (list + 5)->thumbnailImage = "champs/leblancIcon.jpg";
-    (list + 6)->thumbnailImage = "champs/mordekaiserIcon.jpg";
-    (list + 7)->thumbnailImage = "champs/talonIcon.jpg";
-    (list + 8)->thumbnailImage = "champs/vladimirIcon.jpg";
-    (list + 9)->thumbnailImage = "champs/zedIcon.jpg";
+    if (file) {
+        char championName[15];
+        for (int i = 0; i < nbrOfChampions && fgets(championName, 15, file); ++i) {
+            championName[strcspn(championName, "\n")] = 0; // remove trailing \n from champion name
+            list = realloc(list, sizeof(Champion) * (i + 1));
+            (list + i)->name = malloc(sizeof(char) * 15);
+            (list + i)->thumbnailImage = malloc(sizeof(char) * 30);
+            (list + i)->name = championName;
+            sprintf((list + i)->thumbnailImage, "../assets/images/%sIcon.jpg", championName);
+        }
+    } else {
+        return NULL;
+    }
 
     return list;
 }

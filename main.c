@@ -4,10 +4,10 @@
 
 int main(int argc, char **argv) {
     int nbrOfChamps = getUserChoice(nbrOfChamps);
-    Champion *listOfChamps = loadChampionList();
+    Champion *listOfChamps = loadChampionList(nbrOfChamps);
+    calculateChampionPositions(listOfChamps, nbrOfChamps);
     initSDL();
     loadTextures(listOfChamps, nbrOfChamps);
-    calculateChampionPositions(listOfChamps, nbrOfChamps);
     while (1) {
         prepareScene();
         renderChamps(listOfChamps, nbrOfChamps);

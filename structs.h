@@ -11,6 +11,8 @@ typedef struct {
     int x;
     int y;
     SDL_Texture *texture;
-} Champion ;
+    char *name;
+    char *thumbnailImage;
+} Champion;
 
-Champion talon,kata,darius,zed;
+

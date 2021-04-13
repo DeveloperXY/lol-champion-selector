@@ -21,9 +21,9 @@ Champion *loadChampionList(int nbrOfChampions) {
             championName[strcspn(championName, "\n")] = 0; // remove trailing \n from champion name
             list = realloc(list, sizeof(Champion) * (i + 1));
             (list + i)->name = malloc(sizeof(char) * 15);
-            (list + i)->thumbnailImage = malloc(sizeof(char) * 30);
+            (list + i)->iconImage = malloc(sizeof(char) * 30);
             strcpy((list + i)->name, championName);
-            sprintf((list + i)->thumbnailImage, "../assets/images/%sIcon.jpg", championName);
+            sprintf((list + i)->iconImage, "../assets/images/%sIcon.jpg", championName);
         }
     } else {
         return NULL;
@@ -34,7 +34,7 @@ Champion *loadChampionList(int nbrOfChampions) {
 
 
 void prepareScene() {
-//    SDL_SetRenderDrawColor(app.renderer, 96, 20, 255, 255);
+    SDL_SetRenderDrawColor(app.renderer, 96, 20, 255, 255);
     SDL_RenderClear(app.renderer);
 }
 
@@ -45,7 +45,9 @@ void presentScene() {
 
 
 void initSDL(int isDebugging) {
+    app.champion = NULL;
     int rendererFlags, windowFlags;
+
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("couldn't initialize SDL: %s\n", SDL_GetError());
         exit(1);
@@ -94,21 +96,39 @@ void doInput(Champion *list, int nbrOfChamps) {
             case SDL_MOUSEMOTION:
                 SDL_GetMouseState(&app.mouseX, &app.mouseY);
                 break;
+            case SDL_MOUSEBUTTONDOWN:
+                app.champion = getMouseFocusedChampion(list, nbrOfChamps, app.mouseX, app.mouseY);
+                break;
             default:
                 break;
         }
+    }
+
+
+    if (app.champion != NULL) {
+        blit(app.champion->texture, 0, 0);
+        selectedChampionOutline.x = app.champion->x;
+        selectedChampionOutline.y = app.champion->y;
+        selectedChampionOutline.w = CHAMPION_THUMBNAIL_SIZE + 10;
+        selectedChampionOutline.h = CHAMPION_THUMBNAIL_SIZE + 10;
+        SDL_SetRenderDrawColor(app.renderer, 255, 255, 255, 255);
+        SDL_RenderDrawRect(app.renderer, &selectedChampionOutline);
+
+
     }
 
     Champion *champion = getMouseFocusedChampion(list, nbrOfChamps, app.mouseX, app.mouseY);
     if (champion != NULL) {
         blit(champion->texture, 0, 0);
     }
+
+
 }
 
 
 void *loadTextures(Champion *list, int nbrOfChamps) {
     for (int i = 0; i < nbrOfChamps; ++i) {
-        (list + i)->texture = IMG_LoadTexture(app.renderer, (list + i)->thumbnailImage);
+        (list + i)->texture = IMG_LoadTexture(app.renderer, (list + i)->iconImage);
     }
 }
 

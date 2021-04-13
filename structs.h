@@ -3,6 +3,8 @@
 typedef struct {
     SDL_Renderer *renderer;
     SDL_Window *window;
+    int mouseX;
+    int mouseY;
 } App;
 
 App app;

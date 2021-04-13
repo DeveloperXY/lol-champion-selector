@@ -1,12 +1,12 @@
 #include "structs.h"
 
-void initSDL();
+void initSDL(int isDebugging);
 
 void prepareScene();
 
 void presentScene();
 
-void doInput();
+void doInput(Champion *list, int nbrOfChamps);
 
 void *loadTextures(Champion *list, int nbrOfChamps);
 
@@ -23,3 +23,7 @@ int getFirstChampionHorizontalOffset();
 int getFirstChampionVerticalOffset(int nbrOfLines);
 
 void renderChamps(Champion *list, int nbrOfChamps);
+
+Champion *getMouseFocusedChampion(Champion *list, int nbrOfChamps, int x, int y);
+
+int mouseWithinChampionBounds(Champion *champion, int x, int y);

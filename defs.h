@@ -1,5 +1,5 @@
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
+#define SCREEN_WIDTH 1366
+#define SCREEN_HEIGHT 768
 #define CHAMPION_THUMBNAIL_SIZE 100
 #define INNER_MARGIN 10 // spacing between champion thumbnails
 #define CHAMPS_PER_LINE 5

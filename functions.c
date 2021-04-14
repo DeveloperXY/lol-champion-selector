@@ -21,9 +21,9 @@ Champion *loadChampionList(int nbrOfChampions) {
             championName[strcspn(championName, "\n")] = 0; // remove trailing \n from champion name
             list = realloc(list, sizeof(Champion) * (i + 1));
             (list + i)->name = malloc(sizeof(char) * 15);
-            (list + i)->thumbnailImage = malloc(sizeof(char) * 30);
-            (list + i)->name = championName;
-            sprintf((list + i)->thumbnailImage, "../assets/images/%sIcon.jpg", championName);
+            (list + i)->iconImage = malloc(sizeof(char) * 30);
+            strcpy((list + i)->name, championName);
+            sprintf((list + i)->iconImage, "../assets/images/%sIcon.jpg", championName);
         }
     } else {
         return NULL;
@@ -44,8 +44,10 @@ void presentScene() {
 }
 
 
-void initSDL() {
+void initSDL(int isDebugging) {
+    app.champion = NULL;
     int rendererFlags, windowFlags;
+
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("couldn't initialize SDL: %s\n", SDL_GetError());
         exit(1);
@@ -59,7 +61,8 @@ void initSDL() {
         printf("couldn't create window: %s\n", SDL_GetError());
         exit(1);
     }
-    SDL_SetWindowFullscreen(app.window, SDL_WINDOW_FULLSCREEN);
+    if (!isDebugging)
+        SDL_SetWindowFullscreen(app.window, SDL_WINDOW_FULLSCREEN);
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
     app.renderer = SDL_CreateRenderer(app.window, -1, rendererFlags);
     if (!app.renderer) {
@@ -71,10 +74,18 @@ void initSDL() {
 }
 
 
-void doInput(void) {
+Champion *getMouseFocusedChampion(Champion *list, int nbrOfChamps, int x, int y) {
+    for (int i = 0; i < nbrOfChamps; ++i) {
+        if (mouseWithinChampionBounds(list + i, x, y))
+            return list + i;
+    }
+    return NULL;
+}
+
+void doInput(Champion *list, int nbrOfChamps) {
     SDL_Event event;
 
-    while (SDL_PollEvent(&event)) {
+    if (SDL_PollEvent(&event)) {
         switch (event.type) {
             case SDL_QUIT:
                 exit(0);
@@ -82,17 +93,52 @@ void doInput(void) {
                 if (event.key.keysym.sym == SDLK_ESCAPE)
                     exit(0);
                 break;
+            case SDL_MOUSEMOTION:
+                SDL_GetMouseState(&app.mouseX, &app.mouseY);
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                app.champion = getMouseFocusedChampion(list, nbrOfChamps, app.mouseX, app.mouseY);
+                break;
             default:
                 break;
         }
     }
+
+
+    if (app.champion != NULL) {
+        blit(app.champion->texture, 0, 0);
+        selectedChampionOutline.x = app.champion->x;
+        selectedChampionOutline.y = app.champion->y;
+        selectedChampionOutline.w = CHAMPION_THUMBNAIL_SIZE + 10;
+        selectedChampionOutline.h = CHAMPION_THUMBNAIL_SIZE + 10;
+        SDL_SetRenderDrawColor(app.renderer, 255, 255, 255, 255);
+        SDL_RenderDrawRect(app.renderer, &selectedChampionOutline);
+
+
+    }
+
+    Champion *champion = getMouseFocusedChampion(list, nbrOfChamps, app.mouseX, app.mouseY);
+    if (champion != NULL) {
+        blit(champion->texture, 0, 0);
+    }
+
+
 }
 
 
 void *loadTextures(Champion *list, int nbrOfChamps) {
     for (int i = 0; i < nbrOfChamps; ++i) {
-        (list + i)->texture = IMG_LoadTexture(app.renderer, (list + i)->thumbnailImage);
+        (list + i)->texture = IMG_LoadTexture(app.renderer, (list + i)->iconImage);
     }
+}
+
+
+int mouseWithinChampionBounds(Champion *champion, int x, int y) {
+    if ((x >= champion->x && x <= (champion->x + CHAMPION_THUMBNAIL_SIZE)) &&
+        (y >= champion->y && y <= (champion->y + CHAMPION_THUMBNAIL_SIZE)))
+        return 1;
+    else
+        return 0;
 }
 
 
